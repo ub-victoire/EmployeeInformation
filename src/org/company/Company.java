@@ -1,4 +1,4 @@
-package org.company
+package org.company;
 
 public class Company(){
     public void companyName(){
