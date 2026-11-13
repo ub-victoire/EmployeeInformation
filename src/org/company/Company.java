@@ -1,6 +1,6 @@
 package org.company;
 
-public class Company(){
+public class Company{
     public void companyName(){
         System.out.println("Company Name: Test Solution");
     }
