@@ -1,0 +1,11 @@
+# Compiled Java files and build output
+*.class
+out/
+bin/
+target/
+
+# Editor backup files
+*~
+
+# Logs
+*.log
