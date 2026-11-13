@@ -1,163 +1,114 @@
-# Session 3 — EmployeeInformation
+# Employee Information: A Java Packages and Objects Lesson
 
-## 1. Understand the assignment
+This lesson introduces a small Java application made of four classes in separate
+packages. The `Employee` class creates an object of each class and calls its
+method to display a name.
 
-This project contains **four classes in four packages**. The program starts in `Employee`, which creates one object of each class and calls the corresponding method.
+Use the lesson to practise organizing Java files, importing classes, creating
+objects, calling instance methods, and compiling a multi-file program.
 
-| Package | Public class | Required instance method |
+## Learning goals
+
+By the end of the lesson, you should be able to:
+
+- Explain the difference between a class and an object.
+- Describe what a package and an import do.
+- Create objects and call instance methods.
+- Recognize the role of the `main` method.
+- Compile several Java source files and run a class by its fully qualified name.
+
+## Before you begin
+
+You need:
+
+- A JDK 25 installation.
+- A terminal opened at the project root (the directory containing `src`).
+- A text editor or Java IDE.
+
+The program uses `var`, which is available from Java 10 onward. The compile
+command in this lesson uses `--release 25` to target Java 25.
+
+## 1. Explore the project
+
+The Java source files are arranged by package:
+
+```text
+EmployeeInformation/
+└── src/
+    └── org/
+        ├── client/
+        │   └── Client.java
+        ├── company/
+        │   └── Company.java
+        ├── emp/
+        │   └── Employee.java
+        └── project/
+            └── Project.java
+```
+
+In Java, a package declaration corresponds to the folders beneath the source
+root. For example, `src/org/company/Company.java` begins with
+`package org.company;`.
+
+Each public top-level class is in a file with the same name, including
+capitalization: `Company` is declared in `Company.java`.
+
+| Package | Class | Method |
 |---|---|---|
 | `org.emp` | `Employee` | `empName()` |
 | `org.company` | `Company` | `companyName()` |
 | `org.client` | `Client` | `clientName()` |
 | `org.project` | `Project` | `projectName()` |
 
-**Our interpretation:** “Create an object for all 4 classes inside the Employee class” means creating those objects inside `Employee.main`. This includes an `Employee` object, not only objects of the other three classes.
+## 2. Read the supporting classes
 
-The assignment does not specify names to print. We will use fictional demonstration values.
+Each supporting class has one public instance method. Calling the method prints
+that class's information.
 
-### What is new?
-
-You already know classes, object creation, instance methods, and console output. Now you will learn:
-
-- Organizing several classes in one project.
-- Using packages to group classes.
-- Importing classes from other packages.
-- Compiling multiple source files together.
-- Choosing one class as the program's entry point.
-
-You do **not** need inheritance, Maven, external libraries, or Java's module system for this exercise.
-
-## 2. Create the sibling project
-
-Starting from the `CompanyDetails` directory shown in your terminal:
-
-```bash
-cd ..
-pwd
-mkdir -p EmployeeInformation/src/org/{emp,company,client,project}
-mkdir -p EmployeeInformation/.vscode
-cd EmployeeInformation
-code .
-```
-
-The braces in the `mkdir` command are **Bash brace expansion**: Bash expands them into four directory paths. This is shell syntax, not Java syntax.
-
-Your projects should be siblings:
-
-```text
-Introduction/
-├── EmployeeDetails/
-├── CompanyDetails/
-└── EmployeeInformation/
-```
-
-This project has its **own** `Employee` class. Do not copy or edit Question 01's repository by mistake. Reusing the fully qualified name `org.emp.Employee` in these separate exercises is fine because we compile and run each project independently.
-
-### Source structure
-
-```text
-EmployeeInformation/
-├── .gitignore
-├── README.md
-├── .vscode/
-│   └── settings.json
-└── src/
-    └── org/
-        ├── emp/
-        │   └── Employee.java
-        ├── company/
-        │   └── Company.java
-        ├── client/
-        │   └── Client.java
-        └── project/
-            └── Project.java
-```
-
-### VS Code settings
-
-Create `.vscode/settings.json`:
-
-```json
-{
-    "java.project.sourcePaths": ["src"],
-    "java.project.outputPath": "out"
-}
-```
-
-Keep using your installed JDK 25. No new extension or build tool is required.
-
-### Git ignore rules
-
-Create `.gitignore`:
-
-```gitignore
-# Compiled Java files and build output
-*.class
-out/
-bin/
-target/
-
-# Editor backup files
-*~
-
-# Logs
-*.log
-```
-
-## 3. Write the three supporting classes first
-
-Each class goes in its own file, and its public class name must match its filename exactly.
-
-### Company.java
-
-Location: `src/org/company/Company.java`
+### `Company.java`
 
 ```java
 package org.company;
 
 public class Company {
-
     public void companyName() {
-        System.out.println("Company Name: Example Solutions");
+        System.out.println("Company Name: Test Solution");
     }
 }
 ```
 
-### Client.java
-
-Location: `src/org/client/Client.java`
+### `Client.java`
 
 ```java
 package org.client;
 
 public class Client {
-
     public void clientName() {
-        System.out.println("Client Name: Example Retail");
+        System.out.println("Client Name: Divine Andy");
     }
 }
 ```
 
-### Project.java
-
-Location: `src/org/project/Project.java`
+### `Project.java`
 
 ```java
 package org.project;
 
 public class Project {
-
     public void projectName() {
         System.out.println("Project Name: Inventory Management");
     }
 }
 ```
 
-These classes do not need their own `main` methods. They define behavior that the `Employee` entry point will use.
+These are instance methods, not `static` methods. An instance method is called
+through an object of its class. For example, after creating a `Company` object,
+the program can call `company.companyName()`.
 
-## 4. Write Employee.java
+## 3. Understand the `Employee` class
 
-Location: `src/org/emp/Employee.java`
+`Employee` is the entry point for this program. Its `main` method creates four
+objects and calls one method on each:
 
 ```java
 package org.emp;
@@ -167,15 +118,14 @@ import org.company.Company;
 import org.project.Project;
 
 public class Employee {
-
     public void empName() {
-        System.out.println("Employee Name: Alex Morgan");
+        System.out.println("Employee Name: Chris Gloria");
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] argd) {
         var employee = new Employee();
-        var company = new Company();
         var client = new Client();
+        var company = new Company();
         var project = new Project();
 
         employee.empName();
@@ -186,81 +136,73 @@ public class Employee {
 }
 ```
 
-This is the core of the assignment: **four object creations and four method calls inside `Employee.main`.**
+### What is happening?
 
-We continue using `var` for local variables whose types are clear from their initializers. `company` still has a fixed compile-time type: `Company`. This is not dynamically typed code.
+1. The `package` declaration places `Employee` in `org.emp`.
+2. The three `import` statements let this file refer to the other classes by
+   their short names.
+3. Each `new` expression creates an object. For example,
+   `new Company()` creates a `Company` object.
+4. Each method call uses the object before the dot. For example,
+   `company.companyName()` calls `companyName()` on the `company` object.
+5. The calls run from top to bottom, so their order determines the order of the
+   printed lines.
 
-The conventional `public static void main(String[] args)` remains valid on Java 25. We retain it so the entry point does not require an implicitly created launcher object; all four exercise objects are created explicitly in the code above.
+The method parameter name `argd` could also be named `args`; it is a variable
+name and does not change how Java starts the program.
 
-## 5. Understand packages, imports, and access
+### Class, object, and method
 
-### A package identifies where a class belongs
+- A **class** is a definition, such as `Company`.
+- An **object** is an instance created from a class, such as the object stored
+  in `company`.
+- A **method** is an operation a class makes available, such as
+  `companyName()`.
 
-```java
-package org.emp;
-```
+Creating an object does not automatically call its instance methods. The
+program must call each method explicitly.
 
-`Employee` belongs to `org.emp`. It does not also belong to the other three packages.
+### Why use imports?
 
-Each source file has its own package declaration. Do not place four package declarations in one Java file.
-
-### An import lets you use a class's short name
+An import makes a class's short name available in the current source file:
 
 ```java
 import org.company.Company;
 ```
 
-This lets you write:
+Without that import, the program could refer to the class by its fully
+qualified name, `org.company.Company`. An import does not create an object,
+copy code, or run a method.
+
+`Employee` does not import itself because it is already in the current source
+file. Although the packages share the `org` prefix, `org.emp` and
+`org.company` are separate packages.
+
+### Why are the classes and methods public?
+
+`Employee` is in a different package from `Company`, `Client`, and `Project`.
+Those classes and the methods called from `Employee` are declared `public` so
+they can be accessed across package boundaries.
+
+Each supporting class declares no constructor. Java supplies a no-argument
+constructor, which allows the program to create an object with `new Company()`
+(and similarly for `Client` and `Project`).
+
+### What does `var` mean?
+
+In a local variable declaration such as:
 
 ```java
 var company = new Company();
 ```
 
-Without that import, you could instead use the fully qualified class name:
+the compiler infers that `company` has type `Company`. Java is still
+statically typed: after this declaration, `company` cannot be used as an
+unrelated type.
 
-```java
-var company = new org.company.Company();
-```
+## 4. Compile the program
 
-These are alternatives; do not duplicate the object declaration.
-
-An import does **not** copy source code, create an object, or execute a method. It makes a type name available to the compiler under its simple name.
-
-`Employee` needs no import for itself. The other classes need imports here because they belong to different packages and we refer to them by their simple names.
-
-Also, `org.emp` and `org.company` are distinct packages. Their shared `org` prefix does not grant special access between them.
-
-### Why public matters
-
-```java
-public class Company {
-
-    public void companyName() {
-        // ...
-    }
-}
-```
-
-Both the class and the method are `public` so code in `org.emp` can access them.
-
-If you remove `public` from the class, the top-level class becomes package-private. If you remove `public` from the method, that method becomes package-private. Either change prevents this cross-package usage.
-
-Because these classes declare no constructors, Java supplies default no-argument constructors. For these public classes, those default constructors are public too, allowing `new Company()` and the other cross-package object creations.
-
-### Why this is not inheritance
-
-```java
-var company = new Company();
-company.companyName();
-```
-
-`Employee` uses another class by creating an object and calling its method. There is no `extends` declaration and no inheritance requirement here. Do not make `Employee` extend `Company` merely to call `companyName()`.
-
-## 6. Compile all four source files
-
-Save every file. Open a terminal at the **EmployeeInformation project root**.
-
-Run:
+From the project root, compile all four source files:
 
 ```bash
 javac --release 25 -d out \
@@ -270,222 +212,101 @@ javac --release 25 -d out \
     src/org/project/Project.java
 ```
 
-The backslash continues the shell command onto the next line. It must be the last character on its line: do not put spaces after it.
+Here is what the options mean:
 
-This is one compiler command with four source files. Their order does not matter here; the compiler resolves the references between them.
+- `javac` starts the Java compiler.
+- `--release 25` compiles against the Java 25 language and platform APIs.
+- `-d out` writes compiled `.class` files into the `out` directory.
+- The paths at the end identify all four source files for compilation.
 
-`--release 25` explicitly targets Java 25. `-d out` directs generated bytecode into `out/`, preserving the package layout.
+The backslash (`\`) continues the command on the next line in Bash. When
+typing the command on one line, remove the backslashes and line breaks.
 
-Expected generated structure:
+The compiler places the class files under `out` using the package structure:
 
 ```text
 out/
 └── org/
-    ├── emp/
-    │   └── Employee.class
-    ├── company/
-    │   └── Company.class
-    ├── client/
-    │   └── Client.class
-    └── project/
-        └── Project.class
+    ├── client/Client.class
+    ├── company/Company.class
+    ├── emp/Employee.class
+    └── project/Project.class
 ```
 
-No `.class` files should be generated under `src/` by this command.
+Compiling all four files together lets the compiler resolve references between
+them. The source files stay under `src`; generated class files go under `out`.
 
-### Why compile all four explicitly?
+## 5. Run the program
 
-Compiling only `Employee.java` without configuring a source search path may fail to locate the other source files under `src`. Passing all four files is explicit and easy to understand for this small project.
-
-## 7. Run the entry-point class
+Run the `Employee` class by its fully qualified name:
 
 ```bash
 java -cp out org.emp.Employee
 ```
+
+- `-cp out` tells Java to look for compiled classes in `out`.
+- `org.emp.Employee` is the fully qualified name of the class containing
+  `main`.
 
 Expected output:
 
 ```text
-Employee Name: Alex Morgan
-Company Name: Example Solutions
-Client Name: Example Retail
+Employee Name: Chris Gloria
+Company Name: Test Solution
+Client Name: Divine Andy
 Project Name: Inventory Management
 ```
 
-You launch only `Employee`, because that is where we placed `main`. The JVM can also load the supporting classes from the same `out` classpath root.
+Only `Employee` needs a `main` method. The other classes provide behavior that
+the entry point uses. If you change a source file, save it and compile the
+program again before running it.
 
-The execution flow is:
+## 6. Common mistakes
 
-```text
-Employee.main
-    -> Create Employee object
-    -> Create Company object
-    -> Create Client object
-    -> Create Project object
-    -> Call employee.empName()
-    -> Call company.companyName()
-    -> Call client.clientName()
-    -> Call project.projectName()
-    -> Finish
-```
-
-After editing a source file, save it and compile again before launching from the terminal.
-
-## 8. Add a README
-
-Create `README.md`:
-
-````markdown
-# EmployeeInformation
-
-Core Java OOP — Question 03.
-
-## Objective
-
-Create objects of Employee, Company, Client, and Project inside
-Employee.main, then call each object's required instance method.
-
-## Structure
-
-| Package | Class | Method |
-|---|---|---|
-| org.emp | Employee | empName() |
-| org.company | Company | companyName() |
-| org.client | Client | clientName() |
-| org.project | Project | projectName() |
-
-## Requirements
-
-JDK 25. No external dependencies or build tools are required.
-
-## Compile
-
-From the project root:
-
-```bash
-javac --release 25 -d out \
-    src/org/emp/Employee.java \
-    src/org/company/Company.java \
-    src/org/client/Client.java \
-    src/org/project/Project.java
-```
-
-## Run
-
-```bash
-java -cp out org.emp.Employee
-```
-
-## Concepts practiced
-
-- Packages and explicit imports
-- Public classes and methods
-- Object creation and instance-method calls
-- Local-variable type inference with var
-- Multi-file compilation and the classpath
-
-All names and details are fictional demonstration data.
-````
-
-## 9. Commit and publish the repository
-
-Check repository boundaries before initializing:
-
-```bash
-git rev-parse --show-toplevel
-```
-
-- **Not a git repository:** expected for a new independent project; initialize below.
-- **The EmployeeInformation directory:** already initialized; skip initialization.
-- **A parent directory:** stop and resolve the layout before creating a nested repository.
-
-For a new repository:
-
-```bash
-git init -b main
-```
-
-Stage and review the intended files:
-
-```bash
-git add src/ .vscode/settings.json .gitignore README.md
-git diff --cached --stat
-git diff --cached
-```
-
-You should see four Java source files plus the README, settings, and ignore file. Generated bytecode and backups must not be included.
-
-Commit:
-
-```bash
-git commit -m "Complete EmployeeInformation multi-package exercise"
-```
-
-Create an **empty** GitHub repository named `EmployeeInformation` under your account. Do not initialize it with another README or `.gitignore`.
-
-If you create it under the same account as your previous repositories:
-
-```bash
-git remote add origin https://github.com/ub-victoire/EmployeeInformation.git
-git push -u origin main
-git status
-```
-
-Run `git remote add` only if this repository has no `origin` yet. If you use another account or repository name, copy its actual URL.
-
-Finally, inspect the hosted repository in your browser and confirm that all four `.java` files are present.
-
-## 10. Common mistakes
-
-| Problem | Likely cause or correction |
+| Message or symptom | What to check |
 |---|---|
-| `package org.company does not exist` | Check the package declaration, source path, and that all four source files are included in compilation. |
-| `cannot find symbol: class Company` | Check the import and capitalization of `Company`. |
-| Class or method “is not public ... cannot be accessed from outside package” | Make the required class and method public. |
-| `non-static method ... cannot be referenced from a static context` | Call the method through the corresponding object, such as `company.companyName()`. |
-| Running `org.company.Company` fails because no main method exists | Launch `org.emp.Employee`; supporting classes do not need entry points. |
-| Only three objects are created | Add the `Employee` object too. The instruction says all four classes. |
-| Calls appear directly in the class body | Put the executable object-creation and call statements inside `main`. |
-| Output contains only an employee name | Check that all four calls are present, then save and recompile. |
-| File/class mismatch | Use `Employee.java`, `Company.java`, `Client.java`, and `Project.java`, matching case exactly. |
+| `package org.company does not exist` | Compile from the project root and include `Company.java` in the compile command. |
+| `cannot find symbol: class Company` | Check the import, package declaration, spelling, and capitalization. |
+| A class or method cannot be accessed from outside its package | Check that the class and method are declared `public`. |
+| A non-static method is referenced from a static context | Create an object and call the method through it, such as `company.companyName()`. |
+| Java cannot find the main class | Confirm that compilation succeeded and that the run command uses `-cp out org.emp.Employee`. |
+| The program prints fewer than four lines | Check that all four method calls are in `main`, then save and recompile. |
+| `javac` reports a class/file name mismatch | Make the public class name and filename match exactly, including capitalization. |
 
-###  Compile the entire project
+## 7. Practise and check your understanding
 
-From your project root directory, run
+Try these small changes in your own copy of the project:
 
-- `javac -d out $(find src -name "*.java")`
+1. Change one printed name. Compile and run the program again.
+2. Move the `client.clientName()` call. How does the output order change?
+3. Write one local variable with an explicit type, such as
+   `Company company = new Company();`. How is it different from using `var`?
+4. Remove one method call but leave its object creation. What is the effect on
+   the output?
 
-Let's understand
-- `javac -d out $(find src -name "*.java")`
--  `find src`: Search the inside the inside the src directory
--` name "*.java"` Find every file ending in .java
-- `$(...):` Pass all the results to javac
-- `-d out`: put compiled classes inside out, preserving package directories
+Check your understanding:
 
-Then 
+1. Does `import org.company.Company;` create a `Company` object? **No.** It
+   lets the source file use the class's short name.
+2. Why does the program create `Employee` inside `main`? **`main` is static,**
+   so it can run before an `Employee` object exists. The exercise explicitly
+   creates that object and then calls its instance method.
+3. Why is `company.companyName()` an instance-method call? **The method is
+   called through the `company` object.**
+4. What decides the order of the output? **The order of the method calls in
+   `main`.**
+5. Does this program use inheritance? **No.** It creates objects of separate
+   classes and calls their methods; none of the classes extends another.
 
-`java -cp out org.emp.Employee`
+## Summary
 
+This program separates employee, company, client, and project behavior into
+different classes and packages. `Employee.main` imports the supporting types,
+creates one object of each class, and calls their methods. Compiling the source
+files together and running the entry-point class brings the pieces together.
 
-## 11. Final checklist
+---
 
-- [ ] Separate project/repository named `EmployeeInformation`.
-- [ ] Four correctly named packages and public classes.
-- [ ] One required public instance method in each class.
-- [ ] `Employee` imports the other three classes.
-- [ ] `Employee.main` explicitly creates all four objects.
-- [ ] Each object's method is called once.
-- [ ] Compilation succeeds and execution prints four lines.
-- [ ] Generated files stay outside the committed source.
-- [ ] README contains working compile and run commands.
-- [ ] All intended files are pushed to the remote repository.
+**Done by Ushindi B. Victoire**
 
-## 12. Check your understanding
-
-1. Does importing `Company` create a company object? Why not?
-2. Why must `Company` and `companyName()` both be public here?
-3. Why does `Employee` not need `import org.emp.Employee;`?
-4. Why is only one `main` method necessary for this program?
-5. What would happen if `company.companyName()` were removed but the object creation remained?
-
-**Next checkpoint:** share your four source files and the compile/run output. Output can demonstrate behavior; reviewing the source is what confirms that the required packages and object creations are implemented correctly.
+Software QA Engineer | Requirement Specialist | @ub-victoire | @ub-victor
