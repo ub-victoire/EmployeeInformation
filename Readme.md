@@ -449,6 +449,24 @@ Finally, inspect the hosted repository in your browser and confirm that all four
 | Output contains only an employee name | Check that all four calls are present, then save and recompile. |
 | File/class mismatch | Use `Employee.java`, `Company.java`, `Client.java`, and `Project.java`, matching case exactly. |
 
+###  Compile the entire project
+
+From your project root directory, run
+
+- `javac -d out $(find src -name "*.java")`
+
+Let's understand
+- `javac -d out $(find src -name "*.java")`
+-  `find src`: Search the inside the inside the src directory
+-` name "*.java"` Find every file ending in .java
+- `$(...):` Pass all the results to javac
+- `-d out`: put compiled classes inside out, preserving package directories
+
+Then 
+
+`java -cp out org.emp.Employee`
+
+
 ## 11. Final checklist
 
 - [ ] Separate project/repository named `EmployeeInformation`.
